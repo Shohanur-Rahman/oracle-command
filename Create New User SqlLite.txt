@@ -1,0 +1,17 @@
+SQL> alter session set "_ORACLE_SCRIPT"=true;
+
+Session altered.
+
+SQL> create user sagor identified by sagor;
+
+User created.
+
+SQL> grant create session to sagor;
+
+Grant succeeded.
+
+SQL> grant all privileges to sagor;
+
+Grant succeeded.
+
+SQL> connect
