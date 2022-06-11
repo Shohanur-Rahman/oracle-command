@@ -1,5 +1,13 @@
-# SQL PLUS CREATE NEW USER IN ORACLE
+# ORACLE PRINT A LINE
 
+```
+set serveroutput on format wrapped;
+begin
+    DBMS_OUTPUT.put_line('Hello World');
+end;
+```
+
+# SQL PLUS CREATE NEW USER IN ORACLE
 
 ```
 alter session set "_ORACLE_SCRIPT"=true;
@@ -111,15 +119,12 @@ END;
 
 ```
 Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=urHost)(PORT=urPort)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=urOracleSID)));User Id=urUsername;Password=urPassword;
-
 ```
 
 ### Generate Class From Existing Database
 
 ```
-
 Scaffold-DbContext 'Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=urHost)(PORT=urPort)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=urOracleSID)));User Id=urUsername;Password=urPassword; DBA Privilege=SYSDBA/DEFAULT' Oracle.EntityFrameworkCore -Tables universities -OutputDir Models 
-
 ```
 
 ### Oracle Map User Roles based on select query
