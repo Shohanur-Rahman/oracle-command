@@ -1,6 +1,4 @@
 # oracle-command
 
 
-<span>
-All Oracle Commands
-</span>
+```All Oracle Commands
