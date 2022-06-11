@@ -87,3 +87,65 @@ BEGIN
 END;
 
 ```
+
+
+# ORACLE DELTE ALL TABLE DATA IN ONCE
+
+```
+DECLARE
+  ROW_VALUE NUMBER;
+  ROW_TABLE_NAME VARCHAR(200);
+BEGIN
+  FOR J IN (SELECT TABLE_NAME FROM USER_TABLES HERE WHERE HERE.TABLE_NAME <> '__EFMigrationsHistory') LOOP
+      BEGIN
+              EXECUTE IMMEDIATE 'DELETE FROM '||J.TABLE_NAME;
+              COMMIT;
+              EXCEPTION WHEN OTHERS THEN
+              NULL;
+      END;
+  END LOOP;
+END;
+```
+
+### Connection string from ORACLE to C Sharp
+
+```
+Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=urHost)(PORT=urPort)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=urOracleSID)));User Id=urUsername;Password=urPassword;
+
+```
+
+### Generate Class From Existing Database
+
+```
+
+Scaffold-DbContext 'Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=urHost)(PORT=urPort)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=urOracleSID)));User Id=urUsername;Password=urPassword; DBA Privilege=SYSDBA/DEFAULT' Oracle.EntityFrameworkCore -Tables universities -OutputDir Models 
+
+```
+
+### Oracle Map User Roles based on select query
+
+```
+DECLARE
+  ROW_VALUE NUMBER;
+  ROW_TABLE_NAME VARCHAR(200);
+BEGIN
+  FOR ROLESS IN (SELECT ID ROLE_ID FROM TBL_ROLE_INFORMATION WHERE ID IN (1,2,3,4,5,6,7,8))  LOOP
+      BEGIN
+              
+              FOR USERSS IN (SELECT ID USER_ID FROM TBL_USERS WHERE USER_TYPE_ID=3)  LOOP
+                  BEGIN
+                          INSERT INTO TBL_USER_ROLE (USER_ID, role_info_id)
+                          SELECT * FROM (
+                          SELECT USERSS.USER_ID USER_ID, ROLESS.ROLE_ID ROLE_ID FROM DUAL
+                          ) RUR WHERE NOT EXISTS (SELECT 1 FROM TBL_USER_ROLE EX 
+                                    WHERE EX.USER_ID = RUR.USER_ID AND EX.role_info_id = RUR.ROLE_ID);
+                          COMMIT;                         
+                          EXCEPTION WHEN OTHERS THEN
+                          NULL;
+                  END;
+              END LOOP;
+      END;
+  END LOOP;
+END;
+
+```
