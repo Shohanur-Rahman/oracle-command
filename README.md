@@ -54,5 +54,36 @@ GRANT CREATE TYPE TO USER_NAME;
 # SELECT ALL SEQUENCE NAME
 
 ```
-select SEQUENCE_NAME from USER_SEQUENCES
+select SEQUENCE_NAME from USER_SEQUENCES;
+
+select SEQUENCE_NAME from USER_SEQUENCES where SEQUENCE_NAME='ECOM_DB';
+
+```
+
+
+#ORACLE INCREASE SEQUENCE VALUE BY LOPP
+
+```
+
+DECLARE
+  ROW_VALUE NUMBER;
+  ROW_TABLE_NAME VARCHAR(200);
+BEGIN
+  FOR J IN (select SEQUENCE_NAME from USER_SEQUENCES) LOOP
+      BEGIN
+                      FOR I IN 1..650 LOOP
+                      BEGIN
+                              EXECUTE IMMEDIATE 'SELECT '||J.SEQUENCE_NAME||'.NEXTVAL FROM DUAL';
+                              COMMIT;
+                              EXCEPTION WHEN OTHERS THEN
+                              NULL;
+                      END;
+                  END LOOP;
+              COMMIT;
+              EXCEPTION WHEN OTHERS THEN
+              NULL;
+      END;
+  END LOOP;
+END;
+
 ```
